@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="umbook"/>
+  <table-filter match-name="usuarios"/>
+  <table-filter match-name="solicitud_amistad"/>
+  <table-filter match-name="fotos"/>
+  <table-filter match-name="comentarios_muro"/>
+  <table-filter match-name="albums"/>
+</hibernate-reverse-engineering>
