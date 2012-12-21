@@ -4,7 +4,7 @@
  */
 package form;
 
-import dao.UsuariosDAO;
+import dao.UsersDAO;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -23,7 +23,7 @@ public class LogInValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "user", "login.user.required");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pass", "login.pass.required");
         LogIn login = (LogIn) o;
-        UsuariosDAO dao = new UsuariosDAO();
+        UsersDAO dao = new UsersDAO();
         if (dao.findByUserAndPass(login.getUser(), login.getPass()) == null) {
             errors.rejectValue("user", "login.failed");
         }

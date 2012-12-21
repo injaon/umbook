@@ -7,7 +7,6 @@
     request.setAttribute("months", Months.values());
     request.setAttribute("curYear", Calendar.getInstance().get(Calendar.YEAR));
 %>
-
 <!doctype html>
 <html>
     <head>
@@ -51,11 +50,12 @@
                     </tr>
                     <tr>
                         <td><form:label path="genero">Genero</form:label></td>
-                            <td>
+                        <td colspan="2">
                             <form:radiobutton path="genero" value="true" label="M" />
                             <form:radiobutton path="genero" value="false" label="F"/>
                         </td>
                     </tr>
+                    <!--                    TODO-->
                     <!--                    <tr><td>Foto Perfil</td><td><input type="file" name="foto"  accept="image/jpeg" /></td></tr>-->
                     <!--                    <input type="hidden" name="todo" value="upload">-->
                     <tr>
@@ -110,13 +110,3 @@
         </div>
     </body>
 </html>
-
-<%
-
-    /*
-
-     <c:if test="${signup.error != ''}" >
-     <label class="error">${signup.error}</label>
-     </c:if>
-     */
-%>

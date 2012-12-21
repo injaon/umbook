@@ -4,7 +4,7 @@
  */
 package form;
 
-import dao.UsuariosDAO;
+import dao.UsersDAO;
 import java.util.Calendar;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -31,7 +31,7 @@ public class SignUpValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "repassword", "signup.repassword.required");
 
         SignUp signup = (SignUp) o;
-        UsuariosDAO dao = new UsuariosDAO();
+        UsersDAO dao = new UsersDAO();
         if (!signup.getPassword().equals(signup.getRepassword())) {
             errors.rejectValue("repassword", "signup.repassword.mismatch");
         }

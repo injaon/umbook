@@ -4,8 +4,8 @@
  */
 package model;
 
-import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.SessionFactory;
 
 /**
  * Hibernate Utility class with a convenient method to get Session Factory
@@ -31,5 +31,9 @@ public class HibernateUtil {
     
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
+    }
+    
+    public static void main(String[] args) {
+        new HibernateUtil();
     }
 }

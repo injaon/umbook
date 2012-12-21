@@ -7,13 +7,11 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/umbook?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
-    
     <property name="current_session_context_class">thread</property>
-    
-    <mapping resource="model/Fotos.hbm.xml"/>
-    <mapping resource="model/Usuarios.hbm.xml"/>
-    <mapping resource="model/SolicitudAmistad.hbm.xml"/>
+    <mapping resource="model/Photos.hbm.xml"/>
+    <mapping resource="model/Comments.hbm.xml"/>
+    <mapping resource="model/Friendships.hbm.xml"/>
+    <mapping resource="model/Users.hbm.xml"/>
     <mapping resource="model/Albums.hbm.xml"/>
-    <mapping resource="model/ComentariosMuro.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

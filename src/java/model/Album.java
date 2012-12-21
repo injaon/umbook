@@ -1,5 +1,5 @@
 package model;
-// Generated 18/12/2012 03:05:14 by Hibernate Tools 3.2.1.GA
+// Generated 20/12/2012 05:46:46 by Hibernate Tools 3.2.1.GA
 
 
 
@@ -10,22 +10,22 @@ public class Album  implements java.io.Serializable {
 
 
      private Long id;
-     private String nombre;
-     private String descripcion;
-     private long usuario;
+     private String name;
+     private String description;
+     private long owner;
 
     public Album() {
     }
 
 	
-    public Album(String nombre, long usuario) {
-        this.nombre = nombre;
-        this.usuario = usuario;
+    public Album(String name, long owner) {
+        this.name = name;
+        this.owner = owner;
     }
-    public Album(String nombre, String descripcion, long usuario) {
-       this.nombre = nombre;
-       this.descripcion = descripcion;
-       this.usuario = usuario;
+    public Album(String name, String description, long owner) {
+       this.name = name;
+       this.description = description;
+       this.owner = owner;
     }
    
     public Long getId() {
@@ -35,26 +35,26 @@ public class Album  implements java.io.Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getNombre() {
-        return this.nombre;
+    public String getName() {
+        return this.name;
     }
     
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
-    public String getDescripcion() {
-        return this.descripcion;
-    }
-    
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-    public long getUsuario() {
-        return this.usuario;
+    public String getDescription() {
+        return this.description;
     }
     
-    public void setUsuario(long usuario) {
-        this.usuario = usuario;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public long getOwner() {
+        return this.owner;
+    }
+    
+    public void setOwner(long owner) {
+        this.owner = owner;
     }
 
 

@@ -4,8 +4,10 @@
  */
 package form;
 
-import com.sun.istack.internal.NotNull;
+import java.util.Calendar;
+import model.Gender;
 import model.Months;
+import model.User;
 
 /**
  *
@@ -13,7 +15,6 @@ import model.Months;
  */
 public class SignUp {
 
-    @NotNull
     private String nombre;
     private String apellido;
     private String email;
@@ -25,6 +26,15 @@ public class SignUp {
     private Months month;
     private int year;    
 
+    public User toUser() {
+        Calendar birth = Calendar.getInstance();
+        birth.set(year, month.ordinal(), day);
+        String gender = (genero ? Gender.male : Gender.female).toString();
+        return new User(nombre, apellido, email, user, password,
+                gender, birth.getTime(), null);
+    }
+    
+    
     public String getNombre() {
         return nombre;
     }

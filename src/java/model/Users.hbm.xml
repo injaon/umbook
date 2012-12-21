@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 20/12/2012 05:46:47 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class catalog="umbook" name="model.User" table="users">
+        <id name="id" type="java.lang.Long">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property name="firstName" type="string">
+            <column length="45" name="first_name" not-null="true"/>
+        </property>
+        <property name="lastName" type="string">
+            <column length="45" name="last_name" not-null="true"/>
+        </property>
+        <property name="email" type="string">
+            <column length="45" name="email" not-null="true"/>
+        </property>
+        <property name="name" type="string">
+            <column length="45" name="name" not-null="true"/>
+        </property>
+        <property name="password" type="string">
+            <column length="45" name="password" not-null="true"/>
+        </property>
+        <property name="gender" type="string">
+            <column length="6" name="gender" not-null="true"/>
+        </property>
+        <property name="birth" type="date">
+            <column length="10" name="birth" not-null="true"/>
+        </property>
+        <property name="photo" type="string">
+            <column length="200" name="photo" not-null="true"/>
+        </property>
+    
+        <!--relations-->
+<!--        
+        <list name="wallCommentsSend"  inverse="true">
+            <key>
+                <column name="destiny" not-null="true"  />
+                <column name="status" not-null="true"  />
+            </key>
+            <one-to-many class="model.Comments" />
+        </list>-->
+    
+    </class>
+</hibernate-mapping>

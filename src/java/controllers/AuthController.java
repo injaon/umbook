@@ -4,12 +4,12 @@
  */
 package controllers;
 
-import dao.UsuariosDAO;
+import dao.UsersDAO;
 import form.LogIn;
 import form.LogInValidator;
 import form.SignUp;
 import form.SignUpValidator;
-import model.Usuario;
+import model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import services.UserService;
 
 /**
  *
@@ -45,10 +46,11 @@ public class AuthController {
         if (result.hasErrors()) { 
             return "index";
         } else {
-            UsuariosDAO dao = new UsuariosDAO();
-            Usuario user = dao.findByUserAndPass(login.getUser(), login.getPass());
+            UsersDAO dao = new UsersDAO();
+            User user = dao.findByUserAndPass(login.getUser(), login.getPass());
             map.addAttribute("user", user);
-            return "redirect:wall";
+            System.out.println("dsafjaskdnfkjsdn");
+            return String.format("redirect:wall/%d", user.getId());
         }
     }
 
@@ -56,11 +58,13 @@ public class AuthController {
     public String signup(@ModelAttribute("signup") SignUp signup,
             BindingResult result, ModelMap map) {
         signupValidator.validate(signup, result);
+        
         if (result.hasErrors()) {
             return "index";
         } else {
-            
-            // agregar a la BD
+            User user = signup.toUser();
+            new UserService().add(user);
+            map.addAttribute("user", user);
             return "redirect:wall";
         }
     }
