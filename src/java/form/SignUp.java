@@ -24,17 +24,23 @@ public class SignUp {
     private boolean genero;
     private int day;
     private Months month;
-    private int year;    
+    private int year;
 
     public User toUser() {
         Calendar birth = Calendar.getInstance();
         birth.set(year, month.ordinal(), day);
         String gender = (genero ? Gender.male : Gender.female).toString();
-        return new User(nombre, apellido, email, user, password,
-                gender, birth.getTime(), null);
+        User obj = new User();
+        obj.setFirstName(nombre);
+        obj.setLastName(apellido);
+        obj.setEmail(email);
+        obj.setName(user);
+        obj.setPassword(password);
+        obj.setGender(gender);
+        obj.setBirth(birth.getTime());
+        return obj;
     }
-    
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -113,6 +119,5 @@ public class SignUp {
 
     public void setYear(int year) {
         this.year = year;
-    }  
-    
+    }
 }

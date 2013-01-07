@@ -53,6 +53,7 @@ public class WallController {
         mv.addObject("user", user);
         mv.addObject("owner", owner);
         mv.addObject("comment", new CommentForm());
+//        mv.addObject("friends", owner.getFriends());
         
         
         

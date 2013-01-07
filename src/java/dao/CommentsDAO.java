@@ -22,13 +22,13 @@ public class CommentsDAO {
 
     private Session session;
 
-    public List<Comment> getComentarios(long dest_id) {
-        List<Comment> comments = new ArrayList<Comment>();
-        Comment c = new Comment(1, 1, "wall", "propio", new Date());
-        comments.add(c);
-        c = new Comment(6, 1, "wall", "Desde bender", new Date());
-        comments.add(c);
-        return comments;
+//    public List<Comment> getComentarios(long dest_id) {
+//        List<Comment> comments = new ArrayList<Comment>();
+//        Comment c = new Comment(1, 1, "wall", "propio", new Date());
+//        comments.add(c);
+//        c = new Comment(6, 1, "wall", "Desde bender", new Date());
+//        comments.add(c);
+//        return comments;
                 //        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
                 //        if (keepAlive) {
                 //            session = s;
@@ -60,5 +60,5 @@ public class CommentsDAO {
                 //        }
                 //
                 //        return comentarios;
-    }
+//    }
 }

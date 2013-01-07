@@ -114,11 +114,11 @@ public class UsersDAO {
 
     }
 
-        public List<User> getFriendRequests() {
+    public List<User> getFriendRequests() {
         if (user == null) {
             return null;
         }
-        
+
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         s.beginTransaction();
 
@@ -135,7 +135,6 @@ public class UsersDAO {
         return res;
     }
 
-    
 //
 //    public boolean sendFriendRequest(User source, long dest_id) {
 //        return sendFriendRequest(source, this.findById(dest_id));
@@ -211,7 +210,6 @@ public class UsersDAO {
 //        return result;
 //
 //    }
-
 //    public boolean commentOnWall(long source_id, long dest_id, String comment) {
 //        if (comment == null || comment.equals("")) {
 //            System.out.println("Are u kidding me?");
@@ -240,8 +238,24 @@ public class UsersDAO {
 //    }
     public static void main(String[] args) {
         UsersDAO dao = new UsersDAO();
-
-        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+        dao.findById(1L);
+        
+        
+//        
+//
+//        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+//        s.beginTransaction();
+//
+////        String sttm = String.format(
+//        String sttm = "FROM User";
+//
+//
+//        Query q = s.createQuery(sttm);
+//        List<User> list = q.list();
+//
+//
+//        s.getTransaction().commit();
+//        HibernateUtil.getSessionFactory().close();
 
 //        User u = dao.findById(3L);
 //        System.out.println(u.getLastName());

@@ -5,6 +5,7 @@
 package services;
 
 import exceptions.FriendshipException;
+import java.util.List;
 import model.Friendship;
 import model.HibernateUtil;
 import model.User;
@@ -45,7 +46,25 @@ public class UserService extends ABM<User> {
         if (this.areFriends(source, destiny)) {
             throw new FriendshipException("They are already friends");
         }
+
+
+    }
+
+    public static void main(String[] args) {
+
+        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+        s.beginTransaction();
+
+//        String sttm = String.format(
+        String sttm = "FROM User";
+                
+
+        Query q = s.createQuery(sttm);
+        List<User> list = q.list();
         
         
+        s.getTransaction().commit();
+        HibernateUtil.getSessionFactory().close();
+
     }
 }

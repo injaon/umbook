@@ -11,8 +11,9 @@ public class Comment  implements java.io.Serializable {
 
 
      private Long id;
-     private long origin;
-     private long destiny;
+//     private User origin;
+     private User origin;
+     private User destiny;
      private String type;
      private String body;
      private Date date;
@@ -20,7 +21,7 @@ public class Comment  implements java.io.Serializable {
     public Comment() {
     }
 
-    public Comment(long origin, long destiny, String type, String body, Date date) {
+    public Comment(User origin, User destiny, String type, String body, Date date) {
        this.origin = origin;
        this.destiny = destiny;
        this.type = type;
@@ -35,18 +36,18 @@ public class Comment  implements java.io.Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public long getOrigin() {
+    public User getOrigin() {
         return this.origin;
     }
     
-    public void setOrigin(long origin) {
+    public void setOrigin(User origin) {
         this.origin = origin;
     }
-    public long getDestiny() {
+    public User getDestiny() {
         return this.destiny;
     }
     
-    public void setDestiny(long destiny) {
+    public void setDestiny(User destiny) {
         this.destiny = destiny;
     }
     public String getType() {
