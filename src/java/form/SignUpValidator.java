@@ -1,21 +1,35 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2013 Gabriel Lopez <gabriel.marcos.lopez@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 package form;
 
 import dao.UsersDAO;
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import services.DateUtil;
 
-/**
- *
- * @author goks
- */
 public class SignUpValidator implements Validator {
 
     public boolean supports(Class<?> clazz) {
@@ -48,20 +62,19 @@ public class SignUpValidator implements Validator {
             errors.rejectValue("user", "signup.user.exists");
         }
 
-        Calendar cal = Calendar.getInstance();
-        cal.setLenient(false);
-        cal.set(signup.getYear(), signup.getMonth().ordinal(), signup.getDay());
 
-        try {
-            cal.getTime();
-        } catch (IllegalArgumentException e) {
-            errors.reject("months", "signup.date.invalid");
+        if (!signup.getBirth().equals("")) {
+            Calendar cal = Calendar.getInstance();
+            cal.setLenient(false);
+            try {
+                cal.setTime(new DateUtil().parse(signup.getBirth()));
+                cal.getTime();
+
+            } catch (ParseException ex) {
+                errors.reject("birth", "signup.birth.invalid");
+            } catch (IllegalArgumentException e) {
+                errors.reject("birth", "signup.birth.invalid");
+            }
         }
-
-
-
     }
-//    public static void main(String[] args) throws AddressException {
-//        new InternetAddress("sdkjfn").validate();
-//    }
 }

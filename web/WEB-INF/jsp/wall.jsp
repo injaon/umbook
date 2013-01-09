@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>UMBook | ${owner.fullName}</title>
         <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet" media="screen">
         <link href="<c:url value="/css/wall.css"/>" rel="stylesheet" media="screen">
     </head>
@@ -20,7 +20,7 @@
                 <h2>${owner.fullName}</h2>
                 <!-- comment box -->
                 <div>
-                    <form:form commandName="comment" method="POST" action="Comment" class="new-comment" >
+                    <form:form commandName="comment" method="POST" action="Comment" id="new-comment" accept="">
                         <form:hidden path="destiny" value="${owner.id}" />
                         <c:if test="${owner==user}">
                             <form:input path="body" placeholder="En que estas pensando?"/>
@@ -34,7 +34,7 @@
             </div>
         </div>  
 
-        <!-- aca empiezan los comentarios y amigos -->
+        <!-- Center -->
 
         <div class="container-fluid">
             <div class="row-fluid" >
@@ -60,8 +60,7 @@
                             </div>
                             <div class="span10">
                                 <div class="row">
-                                    <c:if test="${comment.origin eq comment.destiny}"><c:out value="${comment.origin.fullName}"/></c:if>
-                                    <c:if test="${comment.origin ne comment.destiny}"><c:out value="${comment.origin.fullName}"/> -> <c:out value="${comment.destiny.fullName}"/></c:if>
+                                    <a href="<c:url value="/wall/${comment.origin.id}"/>">${comment.origin.fullName}</a>
                                 </div>
                                 <div class="row">${comment.date}</div>
                             </div>
@@ -77,5 +76,6 @@
 
         <script type="text/javascript" src="<c:url value="/js/jquery-1.8.3.min.js"/>" ></script>
         <script type="text/javascript" src="<c:url value="/js/bootstrap.min.js"/>" ></script>
+        <script type="text/javascript" src="<c:url value="/js/wall.js"/>" ></script>
     </body>
 </html>

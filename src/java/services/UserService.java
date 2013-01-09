@@ -1,21 +1,35 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2013 Gabriel Lopez <gabriel.marcos.lopez@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 package services;
 
 import exceptions.FriendshipException;
+import form.SignUp;
+import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Friendship;
 import model.HibernateUtil;
 import model.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-/**
- *
- * @author goks
- */
 public class UserService extends ABM<User> {
 
     public boolean areFriends(User source, User dest) throws FriendshipException {
@@ -46,8 +60,34 @@ public class UserService extends ABM<User> {
         if (this.areFriends(source, destiny)) {
             throw new FriendshipException("They are already friends");
         }
+    }
 
+    public User fromForm(SignUp form) {
+        User user = new User();
+        user.setName(form.getUser());
+        user.setFirstName(form.getNombre());
+        user.setLastName(form.getApellido());
+        user.setEmail(form.getEmail());
+        user.setPassword(form.getPassword());
+        user.setGender(form.getGenero());
+        try {
+            user.setBirth(new DateUtil().parse(form.getBirth()));
+        } catch (ParseException ex) {
+            user.setBirth(null);
+        }
+        return user;
+    }
 
+    @Override
+    public void add(User obj) {
+        if (obj.getPhoto() == null || obj.getPhoto().equals("")) {
+            if (obj.getGender().equals("male")) {
+                obj.setPhoto("/img/user_male.png");
+            } else {
+                obj.setPhoto("/img/user_female.png");
+            }
+        }
+        super.add(obj);
     }
 
     public static void main(String[] args) {
@@ -57,12 +97,12 @@ public class UserService extends ABM<User> {
 
 //        String sttm = String.format(
         String sttm = "FROM User";
-                
+
 
         Query q = s.createQuery(sttm);
         List<User> list = q.list();
-        
-        
+
+
         s.getTransaction().commit();
         HibernateUtil.getSessionFactory().close();
 

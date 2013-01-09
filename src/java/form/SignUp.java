@@ -1,18 +1,23 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2013 Gabriel Lopez <gabriel.marcos.lopez@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 package form;
 
-import java.util.Calendar;
-import model.Gender;
-import model.Months;
-import model.User;
-
-/**
- *
- * @author goks
- */
 public class SignUp {
 
     private String nombre;
@@ -21,25 +26,8 @@ public class SignUp {
     private String user;
     private String password;
     private String repassword;
-    private boolean genero;
-    private int day;
-    private Months month;
-    private int year;
-
-    public User toUser() {
-        Calendar birth = Calendar.getInstance();
-        birth.set(year, month.ordinal(), day);
-        String gender = (genero ? Gender.male : Gender.female).toString();
-        User obj = new User();
-        obj.setFirstName(nombre);
-        obj.setLastName(apellido);
-        obj.setEmail(email);
-        obj.setName(user);
-        obj.setPassword(password);
-        obj.setGender(gender);
-        obj.setBirth(birth.getTime());
-        return obj;
-    }
+    private String genero;
+    private String birth;
 
     public String getNombre() {
         return nombre;
@@ -89,35 +77,19 @@ public class SignUp {
         this.repassword = repassword;
     }
 
-    public boolean isGenero() {
+    public String getGenero() {
         return genero;
     }
 
-    public void setGenero(boolean genero) {
+    public void setGenero(String genero) {
         this.genero = genero;
     }
 
-    public int getDay() {
-        return day;
+    public String getBirth() {
+        return birth;
     }
 
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public Months getMonth() {
-        return month;
-    }
-
-    public void setMonth(Months months) {
-        this.month = months;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
+    public void setBirth(String birth) {
+        this.birth = birth;
     }
 }

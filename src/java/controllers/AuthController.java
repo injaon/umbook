@@ -1,7 +1,21 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2013 Gabriel Lopez <gabriel.marcos.lopez@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 package controllers;
 
 import dao.UsersDAO;
@@ -16,14 +30,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import services.UserService;
 
-/**
- *
- * @author goks
- */
+
 @Controller
 @SessionAttributes({"login", "signup", "user"})
 public class AuthController {
@@ -42,30 +54,35 @@ public class AuthController {
     @RequestMapping(value = "/LogIn", method = RequestMethod.POST)
     public String login(@ModelAttribute("login") LogIn login,
             BindingResult result, ModelMap map) {
+
         loginValidator.validate(login, result);
-        if (result.hasErrors()) { 
+        if (result.hasErrors()) {
             return "index";
         } else {
             UsersDAO dao = new UsersDAO();
             User user = dao.findByUserAndPass(login.getUser(), login.getPass());
             map.addAttribute("user", user);
-            System.out.println("dsafjaskdnfkjsdn");
             return String.format("redirect:wall/%d", user.getId());
         }
     }
 
     @RequestMapping(value = "/SignUp", method = RequestMethod.POST)
+//    public @ResponseBody SignUp signup(@ModelAttribute("signup") SignUp signup,
     public String signup(@ModelAttribute("signup") SignUp signup,
             BindingResult result, ModelMap map) {
+
         signupValidator.validate(signup, result);
-        
+//        return signup;
+//        
         if (result.hasErrors()) {
             return "index";
+            
         } else {
-            User user = signup.toUser();
-            new UserService().add(user);
+            UserService serv = new UserService();
+            User user = serv.fromForm(signup);
+            serv.add(user);
             map.addAttribute("user", user);
-            return "redirect:wall";
+            return String.format("redirect:wall/%d", user.getId());
         }
     }
 }

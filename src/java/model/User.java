@@ -21,7 +21,6 @@ public class User implements java.io.Serializable {
     private String gender;
     private Date birth;
     private String photo;
-    private String fullName;
     
     /* relations */
     private Set<User> friends = new HashSet<User>(0);

@@ -29,7 +29,7 @@
             <column length="10" name="birth" not-null="true"/>
         </property>
         <property name="photo" type="string">
-            <column length="200" name="photo" not-null="true"/>
+            <column length="200" name="photo" not-null="true"  />
         </property>
     
         <!--relations-->
