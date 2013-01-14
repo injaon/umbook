@@ -34,13 +34,13 @@
     
         <!--relations-->
         <!--friends-->
-        <set name="friends" table="friendships" cascade="all" lazy="false" >
+        <set name="friends" table="friendships" cascade="all" >
             <key column="origin" />            
             <many-to-many column="destiny"  class="model.User" />
         </set>
         
         <!--comments on wall-->
-        <set name="commentsOnWall" table="comments" cascade="all" lazy="false"  >
+        <set name="commentsOnWall" table="comments" cascade="all" >
             <key column="destiny" />            
             <one-to-many class="model.Comment" />
         </set>

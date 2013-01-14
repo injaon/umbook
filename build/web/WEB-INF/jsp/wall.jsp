@@ -1,3 +1,21 @@
+<%-- 
+Copyright (C) 2013 Gabriel Lopez <gabriel.marcos.lopez@gmail.com>
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+--%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -5,77 +23,102 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet" media="screen">
-        <link href="<c:url value="/css/wall.css"/>" rel="stylesheet" media="screen">
+        <title>UMBook | ${owner.fullName}</title>
+        <link href="<c:url value="/css/bootstrap.min.css"/>" rel="stylesheet" media="screen" >
+        <style type="text/css">
+            body {
+                padding-top: 40px;
+                padding-bottom: 40px;
+                background-color: #f5f5f5;
+            }
+            .perfil {
+                max-width: 600px;
+                padding: 19px 29px 29px;
+                margin: 0 auto 0;
+                background-color: #fff;
+                border: 1px solid #e5e5e5;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            }
+            .one-line-form input {
+                margin-top: 0px;
+            }
+
+            #comments-container {
+                max-width: 500px;
+                padding: 19px 29px 29px;
+                margin: 0 auto 0;
+            }
+
+            .comment-box {
+                max-width: 400px;
+                margin: 0 auto 20px;
+            }
+
+        </style>
     </head>
     <body>
+        <!-- navbar -->
+        <c:import url="navbar.jsp" />        
 
-        <!-- Foto de perfil con box comment :D -->
-        <div class="row">
-            <div class="span3">
-                <img src="<c:url value="${owner.photo}"/>"/>
-            </div>
-            <div class="span9">
-                <h2>${owner.fullName}</h2>
-                <!-- comment box -->
-                <div>
-                    <form:form commandName="comment" method="POST" action="Comment" class="new-comment" >
+        <!-- Owner box -->
+        <div class="container-fluid perfil">
+            <div class="row-fluid">
+                <div class="span4">
+                    <img src="<c:url value="${owner.photo}"/>"/>        
+                </div>
+                <div class="span7 offset1">
+                    <h2>${owner.fullName}</h2>
+                    <p>Email: ${owner.email}</p>
+                    <p>Birth: ${owner.birth}</p>
+                    <form:form cssClass="navbar-form one-line-form" commandName="commentForm" method="POST" action="comment" id="new-comment" >
                         <form:hidden path="destiny" value="${owner.id}" />
                         <c:if test="${owner==user}">
-                            <form:input path="body" placeholder="En que estas pensando?"/>
+                            <form:input path="body" required="True" placeholder="En que estas pensando?"/>
                         </c:if>    
                         <c:if test="${owner!=user}">
-                            <form:input path="body" placeholder="Write something..."/>        
+                            <form:input path="body" required="True" placeholder="Write something..."/>        
                         </c:if>
-                        <form:button class="btn-submit btn-primary btn" type="submit" >Publicar</form:button>
+                        <form:button class="btn-submit btn-primary btn" >Post</form:button>
                     </form:form>
                 </div>
             </div>
         </div>  
+        <!-- Comments -->
+        <div id="comments-container" class="container-fluid">
+            <c:if test="${empty owner.commentsOnWall}" >
+                /* No Comments */
+            </c:if>
 
-        <!-- aca empiezan los comentarios y amigos -->
-
-        <div class="container-fluid">
-            <div class="row-fluid" >
-                <div class="span1">
-                    <!-- info -->
-                    <div class="row"><a href="/gallery.jsp/${owner.id}">Fotos</a></div>
-                    <div class="row"><a href="/info.jsp/${owner.id}">Informacion</a></div>
-                    <!-- friends -->
-                    <div class="row">Friends</div>
-                    <c:forEach items="${owner.friends}" var="friend" >
-                        <div class="row"> 
-                            <a href="<c:url value="/wall/${friend.id}"/>">${friend.fullName}</a>
-                        </div>
-                    </c:forEach>
-
-                </div>
-                <div class="span11">
-                    <!--Comments-->
-                    <c:forEach items="${owner.commentsOnWall}" var="comment" >
-                        <div class="row">
-                            <div class="span1">
-                                <img src="<c:url value="${comment.origin.photo}"/>"/>
-                            </div>
-                            <div class="span10">
-                                <div class="row">
-                                    <c:if test="${comment.origin eq comment.destiny}"><c:out value="${comment.origin.fullName}"/></c:if>
-                                    <c:if test="${comment.origin ne comment.destiny}"><c:out value="${comment.origin.fullName}"/> -> <c:out value="${comment.destiny.fullName}"/></c:if>
-                                </div>
-                                <div class="row">${comment.date}</div>
-                            </div>
-
-                        </div>
-                        <div class="row">
+            <c:url value="/comment/comment" var="commentComment"/>
+            <c:forEach items="${owner.commentsOnWall}" var="comment" >
+                <div class="row-fluid comment-box">
+                    <img class="span3"  src="<c:url value="${comment.origin.photo}"/>"/>
+                    <div class="span9">
+                        <a href="<c:url value="/wall/${comment.origin.id}"/>"><h4 class="origin-name">${comment.origin.fullName}</h4></a>
+                        <!--<div class="row">${comment.date}</div>-->
+                        <div class="row-fluid comment-body">
                             <c:out value="${comment.body}" />
                         </div>
-                    </c:forEach>
+                        <div class="row-fluid">
+                            <form:form cssClass="navbar-form one-line-form" commandName="commentForm" method="POST" action="${commentComment}" >
+                                <form:hidden path="destiny" value="${comment.id}" />
+                                <form:input path="body" placeholder="Write a comment..." required="True"/>
+                                <form:button class="btn-submit btn-primary btn" >Post</form:button>
+                            </form:form>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </c:forEach>
         </div>
 
+        <!--Le JavaScripts-->
         <script type="text/javascript" src="<c:url value="/js/jquery-1.8.3.min.js"/>" ></script>
         <script type="text/javascript" src="<c:url value="/js/bootstrap.min.js"/>" ></script>
+        <script type="text/javascript" src="<c:url value="/js/wall.js"/>" ></script>
     </body>
 </html>

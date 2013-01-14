@@ -19,7 +19,6 @@
 package services;
 
 import model.HibernateUtil;
-import model.User;
 import org.hibernate.Session;
 
 public abstract class ABM<T> {

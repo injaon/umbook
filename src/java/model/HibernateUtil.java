@@ -34,6 +34,6 @@ public class HibernateUtil {
     }
     
     public static void main(String[] args) {
-        new HibernateUtil();
+        HibernateUtil.getSessionFactory();
     }
 }

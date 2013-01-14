@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import services.UserService;
 
-
 @Controller
 @SessionAttributes({"login", "signup", "user"})
 public class AuthController {
@@ -58,6 +57,7 @@ public class AuthController {
         loginValidator.validate(login, result);
         if (result.hasErrors()) {
             return "index";
+
         } else {
             UsersDAO dao = new UsersDAO();
             User user = dao.findByUserAndPass(login.getUser(), login.getPass());
@@ -67,13 +67,10 @@ public class AuthController {
     }
 
     @RequestMapping(value = "/SignUp", method = RequestMethod.POST)
-//    public @ResponseBody SignUp signup(@ModelAttribute("signup") SignUp signup,
     public String signup(@ModelAttribute("signup") SignUp signup,
             BindingResult result, ModelMap map) {
 
         signupValidator.validate(signup, result);
-//        return signup;
-//        
         if (result.hasErrors()) {
             return "index";
             

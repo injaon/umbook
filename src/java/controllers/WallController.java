@@ -15,24 +15,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package controllers;
 
 import dao.UsersDAO;
 import exceptions.FriendshipException;
 import form.CommentForm;
+import java.util.Map;
+import java.util.Set;
+import model.Comment;
 import model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import services.UserService;
 
 @Controller
-@SessionAttributes({"user"})
+@SessionAttributes({"user", "owner"})
 public class WallController {
 
     @RequestMapping(value = "/wall/{owner}", method = RequestMethod.GET)
@@ -57,17 +61,37 @@ public class WallController {
         } catch (FriendshipException ex) {
             owner = user;
         }
-
         // create wall
+        serv.initComments(owner);
+//        owner.setCommentsOnWall(null);
+        
+        
         ModelAndView mv = new ModelAndView("wall");
         mv.addObject("user", user);
         mv.addObject("owner", owner);
-        mv.addObject("comment", new CommentForm());
-//        mv.addObject("friends", owner.getFriends());
-        
-        
-        
+        map.addAttribute("owner", owner);
+
+        mv.addObject("commentForm", new CommentForm());
+
         return mv;
+    }
+
+    @RequestMapping(value = "/wall/user", method = RequestMethod.GET)
+    public @ResponseBody
+    User getUser(@RequestParam("type") String type, ModelMap map) {
+//    String getUser(@RequestParam("type") String type, ModelMap map) {
+
+        User user = null;
+        if (type.equals("user")) {
+            user = (User) map.get("user");
+            return user;
+        } else if (type.equals("owner")) {
+            user = (User) map.get("owner");
+            return user;
+        }
+
+        return null;
+
     }
 
     public static void main(String[] args) {
