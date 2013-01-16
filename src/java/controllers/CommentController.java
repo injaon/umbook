@@ -64,7 +64,7 @@ public class CommentController {
             comment.setDestiny(new UsersDAO().findById(form.getDestiny()));
             comment.setOrigin(user);
             comment.setType(type);
-//            abm.add(comment);
+            abm.add(comment);
         }
 
 

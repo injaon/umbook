@@ -28,25 +28,19 @@ public class User implements java.io.Serializable {
     @JsonBackReference private Set<User> friends = new HashSet<User>(0);
     @JsonBackReference Set<Comment> commentsOnWall = new HashSet<Comment>(0);
 
-    public User() {
+    @Override
+    public boolean equals(Object obj) {
+        User other = (User) obj;
+        return this.getId().equals(other.getId());
     }
 
-//    public User(String firstName, String lastName, String email, String name,
-//            String password, String gender, Date birth, String photo,
-//            Set<User> friends, List<Comment> commentsOnWall) {
-////            Set<User> friends, Set<Comment> commentsOnWall) {
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.email = email;
-//        this.name = name;
-//        this.password = password;
-//        this.gender = gender;
-//        this.birth = birth;
-//        this.photo = photo;
-//        this.friends = friends;
-//        this.commentsOnWall = commentsOnWall;
-//    }
-
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + (this.id != null ? this.id.hashCode() : 0);
+        return hash;
+    }
+    
     public Long getId() {
         return this.id;
     }

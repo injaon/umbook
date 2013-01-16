@@ -39,25 +39,67 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                     <li><a href="<c:url  value='/about'/>">About</a></li>
                 </ul>
                 <!--search form-->
-                <form class="navbar-search">
-                    <input type="text" class="search-query" placeholder="Search">
-                </form>
+                <c:url value="/search" var="searchAction" />
+                <form:form cssClass="navbar-search" commandName="search" method="GET" action="${searchAction}">
+                    <form:input path="input" cssClass="search-query" placeholder="Search for people" />
+                </form:form>
+
                 <ul class="nav pull-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">${owner.fullName}<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Exit</a></li>
-                            <li class="divider"></li>
-                            <li class="nav-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
+                    <li class="nav"><a href="<c:url value="/wall/${user.id}"/>">${user.fullName}</a></li>
+                    <li class="nav">
+                        <div class="">
+                            <a class="nav dropdown-toggle" data-toggle="dropdown">
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Exit</a></li>
+                                <li class="divider"></li>
+                                <li class="nav-header">Nav header</li>
+                                <li><a href="#">Separated link</a></li>
+                                <li><a href="#">One more separated link</a></li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
+                <!--
+                                <a class="nav pull-right">${owner.fullName}</a>
+                                <ul class="nav pull-right">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+                
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Exit</a></li>
+                                            <li class="divider"></li>
+                                            <li class="nav-header">Nav header</li>
+                                            <li><a href="#">Separated link</a></li>
+                                            <li><a href="#">One more separated link</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>-->
             </div><!--/.nav-collapse -->
 
         </div>
     </div>
 </div>
+
+<%                            /*
+
+     <li class="dropdown">
+     <a>${owner.fullName}</a>
+     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+     <ul class="dropdown-menu">
+     <li><a href="#">Action</a></li>
+     <li><a href="#">Another action</a></li>
+     <li><a href="#">Exit</a></li>
+     <li class="divider"></li>
+     <li class="nav-header">Nav header</li>
+     <li><a href="#">Separated link</a></li>
+     <li><a href="#">One more separated link</a></li>
+     </ul>
+     </li>
+     */
+%> 

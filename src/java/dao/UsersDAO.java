@@ -102,19 +102,21 @@ public class UsersDAO {
                     email));
         }
         if (realName != null) {
-            sttm.append(String.format("LOWER(u.nombre) LIKE '%%%s%%' OR ",
+            sttm.append(String.format("LOWER(u.firstName) LIKE '%%%s%%' OR ",
                     realName));
         }
         if (lastName != null) {
-            sttm.append(String.format("LOWER(u.apellido) LIKE '%%%s%%' OR ",
+            sttm.append(String.format("LOWER(u.lastName) LIKE '%%%s%%' OR ",
                     lastName));
         }
         if (gender != null) {
-            sttm.append(String.format("u.genero = %b OR ",
-                    gender));
+            sttm.append(String.format("u.gender = '%s' OR ", gender));
         }
-        sttm.append("false=true)");
-
+        
+        int i = sttm.lastIndexOf("OR");
+        sttm.delete(i, i + 2);
+        sttm.append(")");
+        
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
         s.beginTransaction();
 
@@ -252,28 +254,10 @@ public class UsersDAO {
 //        return res;
 //    }
     public static void main(String[] args) {
-        UsersDAO dao = new UsersDAO();
-        dao.findById(1L);
         
         
-//        
-//
-//        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-//        s.beginTransaction();
-//
-////        String sttm = String.format(
-//        String sttm = "FROM User";
-//
-//
-//        Query q = s.createQuery(sttm);
-//        List<User> list = q.list();
-//
-//
-//        s.getTransaction().commit();
-//        HibernateUtil.getSessionFactory().close();
-
-//        User u = dao.findById(3L);
-//        System.out.println(u.getLastName());
-
+        
+        
     }
+    
 }

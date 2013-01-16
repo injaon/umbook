@@ -20,6 +20,7 @@ package controllers;
 import dao.UsersDAO;
 import exceptions.FriendshipException;
 import form.CommentForm;
+import form.SearchForm;
 import java.util.Map;
 import java.util.Set;
 import model.Comment;
@@ -61,15 +62,14 @@ public class WallController {
         } catch (FriendshipException ex) {
             owner = user;
         }
+
         // create wall
         serv.initComments(owner);
-//        owner.setCommentsOnWall(null);
-        
-        
         ModelAndView mv = new ModelAndView("wall");
         mv.addObject("user", user);
         mv.addObject("owner", owner);
         map.addAttribute("owner", owner);
+        map.addAttribute("search", new SearchForm());
 
         mv.addObject("commentForm", new CommentForm());
 
@@ -91,14 +91,5 @@ public class WallController {
         }
 
         return null;
-
-    }
-
-    public static void main(String[] args) {
-        System.out.println(Long.parseLong("1asd"));
-//        UsersDAO dao = new UsersDAO();
-//        User u = dao.findById(Long.getLong("1"));
-//        
-//        System.out.println(u.getEmail());
     }
 }

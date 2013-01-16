@@ -21,6 +21,7 @@ package controllers;
 import dao.UsersDAO;
 import form.LogIn;
 import form.LogInValidator;
+import form.SearchForm;
 import form.SignUp;
 import form.SignUpValidator;
 import model.User;
