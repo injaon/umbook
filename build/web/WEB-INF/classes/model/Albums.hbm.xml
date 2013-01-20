@@ -13,8 +13,15 @@
     <property name="description" type="string">
       <column length="300" name="description"/>
     </property>
-    <property name="owner" type="long">
-      <column name="owner" not-null="true"/>
+    
+    <property name="image" type="java.lang.String">
+      <column length="300" name="image" not-null="true"/>
     </property>
+    
+    <!-- Relations -->
+    <many-to-one name="owner" class="model.User" fetch="select">
+        <column name="owner" not-null="true" />
+    </many-to-one>
+    
   </class>
 </hibernate-mapping>

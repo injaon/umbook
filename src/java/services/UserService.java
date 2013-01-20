@@ -15,20 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 package services;
 
 import exceptions.FriendshipException;
 import form.SignUp;
 import java.text.ParseException;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Comment;
 import model.Friendship;
 import model.HibernateUtil;
 import model.User;
-import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -105,23 +101,5 @@ public class UserService extends ABM<User> {
 
         s.getTransaction().commit();
         HibernateUtil.getSessionFactory().close();
-    }
-
-    public static void main(String[] args) {
-
-        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-        s.beginTransaction();
-
-//        String sttm = String.format(
-        String sttm = "FROM User";
-
-
-        Query q = s.createQuery(sttm);
-        List<User> list = q.list();
-
-
-        s.getTransaction().commit();
-        HibernateUtil.getSessionFactory().close();
-
     }
 }

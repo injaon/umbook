@@ -15,9 +15,8 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -32,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
                 background-color: #f5f5f5;
             }
             .perfil {
-                max-width: 600px;
+                max-width: 900px;
                 padding: 19px 29px 29px;
                 margin: 0 auto 0;
                 background-color: #fff;
@@ -47,75 +46,60 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
             .one-line-form input {
                 margin-top: 0px;
             }
-
-            #comments-container {
-                max-width: 500px;
+            #main-container {
+                max-width: 800px;
                 padding: 19px 29px 29px;
                 margin: 0 auto 0;
             }
-
+            #comments-container {
+                max-width: 500px; 
+                padding: 19px 29px 29px;
+                margin: 0 auto 0;
+            }
             .comment-box {
                 max-width: 400px;
                 margin: 0 auto 20px;
             }
-
+            .sidebar-nav {
+                padding: 9px 0;
+                margin: 0 auto 0;
+            }            
         </style>
     </head>
     <body>
         <!-- navbar -->
         <c:import url="navbar.jsp" />        
-
         <!-- Owner box -->
-        <div class="container-fluid perfil">
-            <div class="row-fluid">
-                <div class="span4">
-                    <img src="<c:url value="${owner.photo}"/>"/>        
-                </div>
-                <div class="span7 offset1">
-                    <h2>${owner.fullName}</h2>
-                    <p>Email: ${owner.email}</p>
-                    <p>Birth: ${owner.birth}</p>
-                    <form:form cssClass="navbar-form one-line-form" commandName="commentForm" method="POST" action="comment" id="new-comment" >
-                        <form:hidden path="destiny" value="${owner.id}" />
-                        <c:if test="${owner==user}">
-                            <form:input path="body" required="True" placeholder="En que estas pensando?"/>
-                        </c:if>    
-                        <c:if test="${owner!=user}">
-                            <form:input path="body" required="True" placeholder="Write something..."/>        
-                        </c:if>
-                        <form:button class="btn-submit btn-primary btn" >Post</form:button>
-                    </form:form>
-                </div>
-            </div>
-        </div>  
-        <!-- Comments -->
-        <div id="comments-container" class="container-fluid">
-            <c:if test="${empty owner.commentsOnWall}" >
-                /* No Comments */
-            </c:if>
+        <c:import url="wallOwnerBox.jsp" />        
+        <div id="main-container" class="container-fluid">
+            <div id="comments-container">
+                <!-- Comments -->
+                <c:if test="${empty owner.commentsOnWall}" >
+                    /* No Comments */
+                </c:if>
 
-            <c:url value="/comment/comment" var="commentComment"/>
-            <c:forEach items="${owner.commentsOnWall}" var="comment" >
-                <div class="row-fluid comment-box">
-                    <img class="span3"  src="<c:url value="${comment.origin.photo}"/>"/>
-                    <div class="span9">
-                        <a href="<c:url value="/wall/${comment.origin.id}"/>"><h4 class="origin-name">${comment.origin.fullName}</h4></a>
-                        <!--<div class="row">${comment.date}</div>-->
-                        <div class="row-fluid comment-body">
-                            <c:out value="${comment.body}" />
-                        </div>
-                        <div class="row-fluid">
-                            <form:form cssClass="navbar-form one-line-form" commandName="commentForm" method="POST" action="${commentComment}" >
-                                <form:hidden path="destiny" value="${comment.id}" />
-                                <form:input path="body" placeholder="Write a comment..." required="True"/>
-                                <form:button class="btn-submit btn-primary btn" >Post</form:button>
-                            </form:form>
+                <c:url value="/comment/comment" var="commentComment"/>
+                <c:forEach items="${owner.commentsOnWall}" var="comment" >
+                    <div class="row-fluid comment-box">
+                        <img class="span3"  src="<c:url value="${comment.origin.photo}"/>"/>
+                        <div class="span9">
+                            <a href="<c:url value="/wall/${comment.origin.id}"/>"><h4 class="origin-name">${comment.origin.fullName}</h4></a>
+                            <!--<div class="row">${comment.date}</div>-->
+                            <div class="row-fluid comment-body">
+                                <c:out value="${comment.body}" />
+                            </div>
+                            <div class="row-fluid">
+                                <form:form cssClass="navbar-form one-line-form" commandName="commentForm" method="POST" action="${commentComment}" >
+                                    <form:hidden path="destiny" value="${comment.id}" />
+                                    <form:input path="body" placeholder="Write a comment..." required="True"/>
+                                    <form:button class="btn-submit btn-primary btn" >Post</form:button>
+                                </form:form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </c:forEach>
+                </c:forEach>
+            </div>
         </div>
-
         <!--Le JavaScripts-->
         <script type="text/javascript" src="<c:url value="/js/jquery-1.8.3.min.js"/>" ></script>
         <script type="text/javascript" src="<c:url value="/js/bootstrap.min.js"/>" ></script>

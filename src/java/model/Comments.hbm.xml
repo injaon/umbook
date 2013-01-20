@@ -26,7 +26,7 @@
         </property>
         
         <!--relations-->
-        <!--comments con wall-->
+        <!--comments on wall-->
         <many-to-one name="origin" class="model.User" fetch="select">
             <column name="origin" not-null="true" />
         </many-to-one>

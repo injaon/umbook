@@ -13,14 +13,9 @@
     <context:component-scan base-package="controllers" />
     <mvc:annotation-driven />
     <mvc:resources mapping="/**" location="/static/" />
-    
-    <!-- -->
-    
-    
     <bean id="jacksonMessageChanger" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
         <property name="supportedMediaTypes" value="application/json"/>
     </bean>
-
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters">
             <list>
@@ -28,9 +23,6 @@
             </list>
         </property>
     </bean>
-    
-    <!-- -->
-
     <bean id="jspViewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="viewClass"
@@ -38,9 +30,6 @@
         <property name="prefix" value="/WEB-INF/jsp/" />
         <property name="suffix" value=".jsp" />
     </bean>
-    
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" 
           p:basename="messages"/>
-
-
 </beans>

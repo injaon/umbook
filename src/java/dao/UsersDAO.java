@@ -19,25 +19,13 @@
 package dao;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import model.HibernateUtil;
-import model.Friendship;
 import model.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 public class UsersDAO {
-
-    private User user;
-
-    public UsersDAO() {
-        this.user = null;
-    }
-
-    public UsersDAO(User user) {
-        this.user = user;
-    }
 
     public User findById(long id) {
         Session s = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -90,7 +78,7 @@ public class UsersDAO {
         return res;
     }
 
-    public ArrayList<User> find(String username, String email,
+    public List<User> find(String username, String email,
             String realName, String lastName, String gender) {
         StringBuilder sttm = new StringBuilder("FROM User AS u WHERE ( ");
         if (username != null) {
@@ -123,34 +111,33 @@ public class UsersDAO {
         Query q = s.createQuery(sttm.toString());
         //        q.setFirstResult(first);
         //        q.setMaxResults(max);
-        ArrayList<User> res = (ArrayList<User>) q.list();
-
-        s.getTransaction().commit();
-        HibernateUtil.getSessionFactory().close();
-        return res;
-
-    }
-
-    public List<User> getFriendRequests() {
-        if (user == null) {
-            return null;
-        }
-
-        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
-        s.beginTransaction();
-
-        String sttm = String.format(
-                "SELECT usuariosByOrigen from Friendship as sa "
-                + "WHERE sa.accepted IS NULL AND sa.usuariosByDestino.id=%d",
-                user.getId());
-        Query q = s.createQuery(sttm);
-
-        ArrayList<User> res = (ArrayList<User>) q.list();
+        List<User> res = (ArrayList<User>) q.list();
 
         s.getTransaction().commit();
         HibernateUtil.getSessionFactory().close();
         return res;
     }
+
+//    public List<User> getFriendRequests() {
+//        if (user == null) {
+//            return null;
+//        }
+//
+//        Session s = HibernateUtil.getSessionFactory().getCurrentSession();
+//        s.beginTransaction();
+//
+//        String sttm = String.format(
+//                "SELECT usuariosByOrigen from Friendship as sa "
+//                + "WHERE sa.accepted IS NULL AND sa.usuariosByDestino.id=%d",
+//                user.getId());
+//        Query q = s.createQuery(sttm);
+//
+//        ArrayList<User> res = (ArrayList<User>) q.list();
+//
+//        s.getTransaction().commit();
+//        HibernateUtil.getSessionFactory().close();
+//        return res;
+//    }
 
 //
 //    public boolean sendFriendRequest(User source, long dest_id) {
@@ -252,12 +239,5 @@ public class UsersDAO {
 //
 //        res = true;
 //        return res;
-//    }
-    public static void main(String[] args) {
-        
-        
-        
-        
-    }
-    
+//    }    
 }

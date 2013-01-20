@@ -44,6 +44,12 @@
             <key column="destiny" />            
             <one-to-many class="model.Comment" />
         </set>
+               
+        <!-- Albums -->
+        <set name="albums" table="albums" cascade="all" fetch="select" >
+            <key><column name="owner" not-null="true" /></key>
+            <one-to-many class="model.Album" />
+        </set>
         
         <!--        
         <list name="wallCommentsSend"  inverse="true">

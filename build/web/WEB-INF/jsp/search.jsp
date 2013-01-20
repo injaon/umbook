@@ -15,8 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 --%>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +72,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 </div>
 
-<!-- Le JavaScripts-->
+<!-- Le JavaScripts -->
 <script type="text/javascript" src="<c:url value="/js/jquery-1.8.3.min.js"/>" ></script>
 <script type="text/javascript" src="<c:url value="/js/bootstrap.min.js"/>" ></script>
 <script type="text/javascript" src="<c:url value="/js/bootstrap-datepicker.js"/>" ></script>

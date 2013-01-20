@@ -17,13 +17,9 @@
  */
 package controllers;
 
-import dao.UsersDAO;
-import exceptions.FriendshipException;
+import exceptions.PermissionException;
 import form.CommentForm;
 import form.SearchForm;
-import java.util.Map;
-import java.util.Set;
-import model.Comment;
 import model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,35 +38,21 @@ public class WallController {
 
     @RequestMapping(value = "/wall/{owner}", method = RequestMethod.GET)
     public ModelAndView wall(@PathVariable("owner") String ownerId, ModelMap map) {
-        User owner = null, user = (User) map.get("user");
-        // pre-checks
-        if (user == null) {
-            return new ModelAndView("redirect:/");
-        }
-        UsersDAO dao = new UsersDAO();
-        UserService serv = new UserService();
-        try {
-            owner = dao.findById(Long.parseLong(ownerId));
-            if (!serv.areFriends(user, owner)) {
-                map.addAttribute("msg", user.getId() == owner.getId());
-                map.addAttribute("msg1", owner.getId());
-                return new ModelAndView("accessDenied");
-            }
-
-        } catch (NumberFormatException ex) {
-            return new ModelAndView("notfound");
-        } catch (FriendshipException ex) {
-            owner = user;
-        }
-
-        // create wall
-        serv.initComments(owner);
         ModelAndView mv = new ModelAndView("wall");
-        mv.addObject("user", user);
-        mv.addObject("owner", owner);
-        map.addAttribute("owner", owner);
-        map.addAttribute("search", new SearchForm());
+        UsersUtil util = new UsersUtil();
 
+        try {
+            util.preChecks(mv, map, ownerId);
+        } catch (PermissionException ex) {
+            return mv;
+        }
+        // create wall
+        UserService serv = new UserService();        
+        User owner = util.getOwner();        
+        serv.initComments(owner);
+
+        map.addAttribute("owner", owner); // TODO: wtf!
+        map.addAttribute("search", new SearchForm());
         mv.addObject("commentForm", new CommentForm());
 
         return mv;
@@ -79,8 +61,6 @@ public class WallController {
     @RequestMapping(value = "/wall/user", method = RequestMethod.GET)
     public @ResponseBody
     User getUser(@RequestParam("type") String type, ModelMap map) {
-//    String getUser(@RequestParam("type") String type, ModelMap map) {
-
         User user = null;
         if (type.equals("user")) {
             user = (User) map.get("user");
@@ -89,7 +69,6 @@ public class WallController {
             user = (User) map.get("owner");
             return user;
         }
-
-        return null;
+        return user;
     }
 }

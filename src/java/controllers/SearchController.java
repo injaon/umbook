@@ -15,14 +15,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
+
 package controllers;
 
 import dao.UsersDAO;
 import form.SearchForm;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
+import java.util.Set;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import model.User;
@@ -50,8 +50,8 @@ public class SearchController {
         }
 
         UsersDAO dao = new UsersDAO();
-        ArrayList<User> results = new ArrayList<User>();
-        ArrayList<User> dummyList;
+        Set<User> results = new HashSet<User>();
+        List<User> dummyList;
         User dummy;
 
         for (String entry : input.split("\\s+")) {
@@ -90,14 +90,7 @@ public class SearchController {
                 results.addAll(dummyList);
             }
         }
-        mv.addObject("users", new HashSet<User>(results));
+        mv.addObject("users", results);
         return mv;
-    }
-
-    public static void main(String[] args) {
-        for (String s : "asd    asd     \t asdfd".split("\\s+")) {
-            System.out.println(s);
-        }
-
     }
 }

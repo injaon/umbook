@@ -1,11 +1,25 @@
 owner = null;
 user = null
 
+/**
+ * reaise a modal dialog with a form to create a new album
+ */
+function createAlbum () {
+}
+
+
 $(document).ready(function(){ 
     $.get("/WebApplication2/wall/user", {
         type:"user"
     }, function(data) {
         user = data;
+        
+    }, "json");
+    
+    $.get("/WebApplication2/wall/user", {
+        type:"owner"
+    }, function(data) {
+        owner = data;
         
     }, "json");
     
@@ -26,7 +40,54 @@ $(document).ready(function(){
        
         $("#new-comment").find("input[type=text]").val("");
         return false; 
-   
+    });
+    
+    /* 
+     * Open Photo Tab
+     */
+    photos_opened = false;
+    $("#photos-link").click(function () {
+        if($(this).parent().hasClass("active")) {
+            return false;
+        }
+        $(this).parent().parent().children().toggleClass("active");
+        
+        if(photos_opened) {
+            $("#comments-container").fadeOut(1000, function () {
+                $("#albums-container").fadeIn(1000);
+            });
+            return false;
+        } else {
+            photos_opened = true;
+        }
+        
+        // Hide content
+        $("#comments-container").fadeOut(1000, function () {
+            $.get("/WebApplication2/photos/albums/" + owner.id, {},
+                function (data) {
+                    $("#main-container").append(data);
+                    /* Load the script */
+                    $script = $("<script />");
+                    $script.attr("type", "text/javascript");
+                    $script.attr("src", "/WebApplication2/js/photos.js");
+                    $("script").last().append($script);
+                });
+        });
+        return false;
+    });
+        
+    /*
+     * Wall Tab
+     */
+    $("#wall-link").click(function () {
+        if($(this).parent().hasClass("active")) {
+            return false;
+        }
+        $(this).parent().parent().children().toggleClass("active");        
+        $("#albums-container").fadeOut(1000, function () {
+            $("#comments-container").fadeIn(1000);
+        });
+        return false;
     });
     
 });
